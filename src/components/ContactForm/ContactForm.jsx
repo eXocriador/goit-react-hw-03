@@ -3,9 +3,16 @@ import * as Yup from "yup";
 import styles from "./ContactForm.module.css";
 
 const validationSchema = Yup.object({
-  name: Yup.string().min(3).max(50).required("Name is required"),
+  name: Yup.string()
+    .trim()
+    .min(3, "Name must be at least 3 characters")
+    .max(50, "Name must be at most 50 characters")
+    .matches(/^[a-zA-Zа-яА-ЯґҐєЄіІїЇ' -]+$/, "Invalid name format")
+    .required("Name is required"),
+
   number: Yup.string()
-    .matches(/\d{3}-\d{2}-\d{2}/, "Invalid phone format (XXX-XX-XX)")
+    .trim()
+    .matches(/^\d{3}-\d{2}-\d{2}$/, "Invalid phone format (XXX-XX-XX)")
     .required("Number is required"),
 });
 
